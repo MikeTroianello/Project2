@@ -8,6 +8,7 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const router = require('./routes/auth');
 
 
 mongoose
@@ -29,7 +30,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use('/', router);
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({
@@ -56,3 +57,5 @@ app.use('/', index);
 
 
 module.exports = app;
+
+
