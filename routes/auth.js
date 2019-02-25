@@ -19,18 +19,22 @@ router.post("/signup", (req, res, next) => {
   const salt     = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
 
+  if (username === "" || password === "") {
+    res.render("auth/signup", {
+      errorMessage: "Please enter both, username and password to sign up."
+    });
+    return;
+  }
 
-User.findOne({ "username": username })
-  .then(user => {
-    if (user !== null) {
-        res.render("auth/signup", {
-          errorMessage: "The username already exists!"
-        });
-        return;
-      }
-
-
-
+  User.findOne({ "username": username })
+    .then(user => {
+      if (user !== null) {
+          res.render("auth/signup", {
+            errorMessage: "The username already exists!"
+          });
+          console.log("EEFERGERGERGERGERG")
+          return;
+        }
       User.create({
         username,
         password: hashPass
